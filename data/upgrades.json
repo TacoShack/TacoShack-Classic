@@ -1,0 +1,82 @@
+{
+    "121": {
+        "name": "New Paint",
+        "price": 250,
+        "boost": 10,
+        "max": 3
+    },
+    "122": {
+        "name": "New Furniture",
+        "price": 600,
+        "boost": 20,
+        "max": 3
+    },
+    "123": {
+        "name": "Better Appliances",
+        "price": 1200,
+        "boost": 40,
+        "max": 5
+    },
+    "124": {
+        "name": "Nicer Batchrooms",
+        "price": 800,
+        "boost": 25,
+        "max": 2
+    },
+    "125": {
+        "name": "Billboard",
+        "price": 1000,
+        "boost": 35,
+        "max": 5
+    },
+    "126": {
+        "name": "Cooler Tip Jar",
+        "price": 500,
+        "boost": 15,
+        "max": 3
+    },
+
+
+    "231": {
+        "name": "Apprentice Chef",
+        "price": 250,
+        "boost": 10,
+        "max": 5
+    },
+    "232": {
+        "name": "Cook",
+        "price": 600,
+        "boost": 20,
+        "max": 5
+    },
+    "233": {
+        "name": "Sous Chef",
+        "price": 1200,
+        "boost": 40,
+        "max": 3
+    },
+    "234": {
+        "name": "Head Chef",
+        "price": 2000,
+        "boost": 65,
+        "max": 3
+    },
+    "235": {
+        "name": "Executive Chef",
+        "price": 5000,
+        "boost": 150,
+        "max": 2
+    },
+    "236": {
+        "name": "Advertiser",
+        "price": 100,
+        "boost": 50,
+        "max": 3
+    },
+    "237": {
+        "name": "Greeter",
+        "price": 100,
+        "boost": 50,
+        "max": 2
+    }
+}
