@@ -27,7 +27,7 @@ bot.on('ready', () => {
         }
         return bot.channels.get('490361223062355988').send(`Hourly Income Sent!`);
 
-    }, 3600000);//3600000
+    }, 3600000);
 
 });
 
@@ -103,12 +103,9 @@ fs.readdir("./commands/games/", (err, files) => {
 bot.on('message', async message => {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
-    //if (message.channel.type === "dm" || message.channel.type === "group") return;
-    if (message.guild.id != '489936871502381066') return;
     const args = message.content.substring(prefix.length).trim().split(/ +/g);
     let command = args[0].toLowerCase();
     let cmd;
-
 
     if (bot.commands.has(command)) {
         cmd = bot.commands.get(command);
