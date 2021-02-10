@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
-const shacks = require("../../data/shacks.json");
+const shacks = require("../../schemas/shacks.js");
 const upgrades = require("../../data/upgrades.json");
 const prefix = settings.prefix;
 const fs = require("fs");
@@ -14,33 +14,36 @@ module.exports.run = async (bot, message, args, funcs) => {
         return total;
     }
 
-if(args[1]) {
+    if (args[0]) {
 
-   // if(funcs.check_NaN(message.author.id) === false) return message.reply("Your balance and income was reset to **$100** for having a **NaN** balance/income!")
+        shacks.findOne({ userID: message.author.id }, (err, data) => {
+            if (err) {
+                console.log(err)
+                message.channel.send('An error occured.')
+                return;
+            } else if (!data) {
+                message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
+                return;
+            } else if (data) {
+                var id = args[0].toString()
+                if (!upgrades[id]) return message.channel.send(`Please use a valid ID!`)
+                if (id > 230 && id < 238) return message.channel.send(`That is an employee! Use \`${settings.prefix}hire [ID]\` to hire!`)
+                var cost = costCalc(upgrades[id].price, data.upgrades[id])
+                if (data.balance < cost) return message.channel.send(`You don't have enough money!`)
+                if (data.upgrades[id] >= upgrades[id].max) return message.channel.send(`You already have purchased the maximum amount!`)
 
+                if (data.balance < cost) return message.channel.send(`You don't have enough money!`)
+                if (data.upgrades[id] >= upgrades[id].max) return message.channel.send(`You already have purchased the maximum amount!`)
 
-    if(!shacks[message.author.id]) return message.channel.send(`You do not own a shack! Use \`!found\` to found your shop!`)
-    var id = args[1].toString()
-    if(!upgrades[id]) return message.channel.send(`Please use a valid ID!`)
-    if(id > 230 && id < 238) return message.channel.send(`That is an employee! Use \`!hire [ID]\` to hire!`)
+                data.balance -= cost
+                data.income += upgrades[id].boost
+                data.upgrades[id] += 1
+                data.save().catch(err => console.log(err))
+                return message.channel.send(`✅ You have purchased a **${upgrades[id].name}** for **$${cost}**`)
+            }
+        })
 
-    var cost = costCalc(upgrades[id].price, shacks[message.author.id].upgrades[id])
-
-    if(shacks[message.author.id].balance < cost) return message.channel.send(`You don't have enough money!`)
-    if(shacks[message.author.id].upgrades[id] >= upgrades[id].max) return message.channel.send(`You already have purchased the maximum amount!`)
-
-
-    shacks[message.author.id].balance = shacks[message.author.id].balance - cost
-    shacks[message.author.id].income = shacks[message.author.id].income + upgrades[id].boost
-    shacks[message.author.id].upgrades[id] = shacks[message.author.id].upgrades[id] + 1
-
-    fs.writeFile("././data/shacks.json", JSON.stringify(shacks, null, 4), (err) => {
-        if(err) console.log(err);
-    })
-
-    return message.channel.send(`✅ You have purchased a **${upgrades[id].name}** for **$${cost}**`)
-
-} else return message.channel.send("Please specify an ID!")
+    } else return message.channel.send("Please specify an ID!")
 
 
 }

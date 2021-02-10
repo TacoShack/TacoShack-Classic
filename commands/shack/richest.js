@@ -1,40 +1,44 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
-const shacks = require("../../data/shacks.json");
+const shacks = require("../../schemas/shacks.js");
 const prefix = settings.prefix;
 const fs = require("fs");
 
 module.exports.run = async (bot, message, args) => {
 
-    var sortable = []
-        for(var p in shacks) {
-        sortable.push({
-                'name':shacks[p].name, 'level':shacks[p].balance
-        })
-    };
+    shacks.find().sort([
+        ['balance', 'descending']
+    ]).exec(async (err, res) => {
 
-    sortable.sort(function(a, b){return b.level - a.level});
+        if (err) return console.log(err);
 
-    var top10 = sortable.slice(0, 10); 
-    var stringarray = [];
-    var i = 0;
-    await top10.forEach(c => {
-        i++;
-        stringarray.push(`**${i}.** **${c.name}** - $${c.level.toString()}`);
-    });
-    
-    var string = stringarray.join("\n\n");
+        var leader = new Discord.MessageEmbed()
+            .setColor('#f400f0')
+            .setAuthor("💸  Richest Taco Shacks  💸")
 
-    bot.fetchUser(bot.user).then(myUser => {
-        avatar = myUser.avatarURL;
-            
-    var leader = new Discord.RichEmbed()
-    .setColor('#f400f0')
-    .setAuthor("💸  Richest Taco Shacks  💸")
-    .setDescription(`\n${string}`)
+        stringarray = []
+        if (res.length === 0) {
+            // ... 
+        } else if (res.length < 10) { // Less than 10 results
+            for (i = 0; i < res.length; i++) {
+                stringarray.push(`**${i + 1}.** **${res[i].name}** - $${res[i].balance.toString()}`)
+            }
+        } else {
+            for (i = 0; i < 10; i++) {
+                stringarray.push(`**${i + 1}.** **${res[i].name}** - $${res[i].balance.toString()}`)
+            }
+        }
+        var string = stringarray.join("\n\n");
 
-    message.channel.send({embed: leader});
-});
+        let obj = res.find(u => u.userID === message.author.id);
+        let index = res.indexOf(obj);
+
+        leader.setDescription(`\n${string} ${(index < 10) ? "" : `\n━━━━━━━━━━━━━━\n**${index + 1}.** **You** - ${obj.balance.toString()}`}`)
+        if (index > 10) {
+            leader.setFooter('The leaderboard in v1.0 would not show your place')
+        }
+        await message.channel.send({ embed: leader });
+    })
 
 
 }
