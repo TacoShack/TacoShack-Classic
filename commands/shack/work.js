@@ -1,39 +1,37 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
-const shacks = require("../../data/shacks.json");
+const shacks = require("../../schemas/shacks.js");
 const prefix = settings.prefix;
 const fs = require("fs");
-let cooldown = new Set();
-let cdseconds = 600;
 
 module.exports.run = async (bot, message, args) => {
+     
+    shacks.findOne({userID: message.author.id}, async (err, data) => {
+        if (err){
+            message.channel.send('An error occured.')
+            return;
+        } else if (!data) {
+            message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
+            return
+        } else if (data) {
+           
+            if (data.work > Date.now() && data.work){
+                message.channel.send(`Chill... Don't overwork yourself!`)
+                return;
+            }
+                var tacos = Math.floor(Math.random() * (30 - 5) ) + 5;
+                var money = Math.floor(Math.random() * (100 - 20) ) + 20;
+                data.work = Date.now() + 600000
+                data.balance += money
+                data.tacos += tacos
+                data.save().catch(err => console.log(err))
+            
+                return message.channel.send(`💵 You cooked **${tacos}** tacos and earned **$${money}** while working!`)
 
-    if(!shacks[message.author.id]) return message.channel.send(`You do not own a shack! Use \`!found\` to found your shop!`)
-
-
-    if(cooldown.has(message.author.id)) {
-        message.channel.send("Chill... Don't overwork yourself!")
-
-        setTimeout(() => {
-            cooldown.delete(message.author.id)
-        }, cdseconds * 1000)
-    } else {
-        var tacos = Math.floor(Math.random() * (30 - 5) ) + 5;
-        var money = Math.floor(Math.random() * (100 - 20) ) + 20;
-        shacks[message.author.id].balance = shacks[message.author.id].balance + money
-        shacks[message.author.id].tacos = shacks[message.author.id].tacos + tacos
-
-        fs.writeFile("././data/shacks.json", JSON.stringify(shacks, null, 4), (err) => {
-            if(err) console.log(err);
-        })
-
-        cooldown.add(message.author.id);
-
-        return message.channel.send(`💵 You cooked **${tacos}** tacos and earned **$${money}** while working!`)
-    }
-
-
-
+               
+              
+        }
+    })
 }
 
 module.exports.help = {

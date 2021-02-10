@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
-const shacks = require("../../data/shacks.json");
 const prefix = settings.prefix;
 const fs = require("fs");
 

@@ -4,15 +4,13 @@ const prefix = settings.prefix;
 const shacks = require("../../schemas/shacks.js");
 const fs = require("fs");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, funcs) => {
 
-    return message.channel.send("Hiii!")
-
-    
+    message.channel.send(funcs.embed("01/24/2019"))
     
 }
 
 module.exports.help = {
-    name: "test",
+    name: "level",
     aliases: []
 }
