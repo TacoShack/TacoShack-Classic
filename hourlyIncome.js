@@ -1,6 +1,5 @@
-const settings = require('./util/settings.json')
 const shacks = require("./schemas/shacks.js");
-const Discord = require('discord.js');
+
 module.exports = {
     send: (bot) => {
         out = []
@@ -31,7 +30,5 @@ module.exports = {
                     })
                 })
             });
-
-
     }
 }

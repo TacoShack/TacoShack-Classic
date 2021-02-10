@@ -1,6 +1,7 @@
 const settings = require(`../util/settings.json`)
 const funcs = require('../util/functions.js')
 const cooldown = new Set();
+
 module.exports = async (bot, message) => {
 	if (!message.guild || !message.content.startsWith(settings.prefix) || message.author.bot) return;
 
@@ -30,7 +31,7 @@ module.exports = async (bot, message) => {
 	}
 
 	try {
-		command.run(bot, message, args, funcs);
+		command.run(bot, message, args, funcs, settings.prefix);
 	}
 	catch (err) {
 		console.log(err);

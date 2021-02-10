@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message) => {
     shacks.find().sort([
         ['income', 'descending']
     ]).exec(async (err, res) => {

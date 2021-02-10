@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
 const ms = require("ms");
 
-module.exports.run = async (bot, message, args, funcs) => {
+module.exports.run = async (bot, message, args, funcs, prefix) => {
     shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (args[0] === 'stats') {
             message.channel.send(funcs.embed("03/29/2020"))
@@ -13,7 +12,7 @@ module.exports.run = async (bot, message, args, funcs) => {
                 message.channel.send('An error occured.')
                 return;
             } else if (!data) {
-                message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your taco shack!`)
+                message.channel.send(`You do not own a shack! Use \`${prefix}found\` to found your taco shack!`)
                 return
             } else if (data) {
                 var time = ms(Date.now() - data.joined, { long: true });

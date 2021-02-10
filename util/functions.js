@@ -9,6 +9,13 @@ module.exports = {
         if (bet.includes("Infinity")) return false;
     },
 
+    costCalc(cost, amount) {
+        var amountT = amount + 1;
+        var amountTotal = amountT * amountT;
+        var total = amountTotal * cost;
+        return total;
+    },
+
     embed: function (created, original = "09/13/2018") {
         var dt1 = new Date(original);
         var dt2 = new Date(created);

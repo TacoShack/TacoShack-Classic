@@ -1,11 +1,9 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
 const ms = require("ms");
 
-const incorrect = `❌ Please use the correct format: \`${settings.prefix}lookup [id/shack name]\``;
-
-module.exports.run = async (bot, message, args, funcs) => {
+module.exports.run = async (bot, message, args, funcs, prefix) => {
+    const incorrect = `❌ Please use the correct format: \`${prefix}lookup [id/shack name]\``;
     const embed = new Discord.MessageEmbed()
 
     if (!args[0]) return message.channel.send(embed.setDescription(incorrect).setColor('dc0000'))

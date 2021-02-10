@@ -1,29 +1,38 @@
 const Discord = require('discord.js');
-const mongoose = require('./mongoose.js');
 const bot = new Discord.Client();
-const settings = require('./util/settings.json');
-const hourlyIncome = require('./hourlyIncome.js');
-const requireAll = require('require-all');
+
+// Package Imports
 const path = require('path');
+const requireAll = require('require-all');
 const fs = require('fs');
 const cron = require('cron');
 
-bot.logWebhook = new Discord.WebhookClient(settings.logWebhook[0], settings.logWebhook[1]);
+// File Imports
+const mongoose = require('./mongoose.js');
+const settings = require('./util/settings.json');
+const hourlyIncome = require('./hourlyIncome.js');
 
+// Bot Properties
+bot.logWebhook = new Discord.WebhookClient(settings.logWebhook[0], settings.logWebhook[1]);
+bot.commands = new Discord.Collection();
+
+// Send hourly incomes every hour
 let hourlyIncomeJob = new cron.CronJob('0 * * * *', () => {
 	hourlyIncome.send(bot);
 })
 
-//ready
+// On Ready Event
 bot.on('ready', () => {
 	console.log(`Logged in as ${bot.user.tag} | Taco Shack Ready to Sell Some Tacos!`)
 	bot.user.setActivity(`with v1.0`)
 	hourlyIncomeJob.start()
 });
 
+// Error Handlers
 bot.on("error", (e) => console.error("Error " + e));
 bot.on("warn", (e) => console.warn("Warn " + e));
 
+// Load command files
 const events = requireAll({
 	dirname: __dirname + '/events',
 	filter: /^(?!-)(.+)\.js$/,
@@ -34,8 +43,7 @@ for (const name in events) {
 	const event = events[name];
 	bot.on(name, event.bind(null, bot));
 }
-
-bot.commands = new Discord.Collection();
+// Fetch commands
 function getCommands(dir, callback) {
 	fs.readdir(dir, (err, files) => {
 		if (err) throw err;
@@ -57,5 +65,5 @@ function getCommands(dir, callback) {
 
 getCommands('./commands/');
 
-bot.login(settings.token).catch(e => { console.log(e); })
-mongoose.init()
+bot.login(settings.token).catch(e => { console.log(e); });
+mongoose.init();

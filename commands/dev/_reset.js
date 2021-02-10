@@ -1,9 +1,8 @@
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-module.exports.run = async (bot, message, args) => {
 
+module.exports.run = async (bot, message, args, funcs, prefix) => {
     if (!message.member.permissions.has("BAN_MEMBERS")) return;
-    var incorrect = `Please use the correct format: \`${settings.prefix}_reset [name] [User ID]\`\nEx: \`${settings.prefix}reset name 255422791875166208\``
+    var incorrect = `Please use the correct format: \`${prefix}_reset [name] [User ID]\`\nEx: \`${prefix}reset name 255422791875166208\``
     if (!args[0] || !args[1]) return message.channel.send(incorrect)
     if (args[0].toLowerCase() != 'name') return message.channel.send(incorrect)
     const userid = args[1].replace(/[<@!>]/g, '')
@@ -23,8 +22,6 @@ module.exports.run = async (bot, message, args) => {
         }
     })
 }
-
-
 
 module.exports.help = {
     name: "_reset",

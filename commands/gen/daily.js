@@ -1,15 +1,14 @@
-const settings = require('../../util/settings.json');
 const shacks = require('../../schemas/shacks.js');
 const ms = require("ms")
 
-module.exports.run = async (bot, message) => {
+module.exports.run = async (bot, message, args, funcs, prefix) => {
     shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {
             console.log(err)
             message.channel.send('An error occured.')
             return;
         } else if (!data) {
-            message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
+            message.channel.send(`You do not own a shack! Use \`${prefix}found\` to found your shop!`)
             return;
         } else if (data) {
             if (data.daily > Date.now()) {

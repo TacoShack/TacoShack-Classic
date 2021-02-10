@@ -29,6 +29,6 @@ const shackSchema = mongoose.Schema({
         "237": Number
     }
 },
-{ versionKey: false });
+    { versionKey: false });
 
 module.exports = mongoose.model('shacks', shackSchema);

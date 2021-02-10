@@ -1,16 +1,14 @@
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
 
-const incorrect = `Please use the correct format: \`${settings.prefix}flip [heads/tails] [bet]\`\n\`Ex: ${settings.prefix}flip heads 100\``;
-
-module.exports.run = async (bot, message, args, funcs) => {
+module.exports.run = async (bot, message, args, funcs, prefix) => {
+    const incorrect = `Please use the correct format: \`${prefix}flip [heads/tails] [bet]\`\n\`Ex: ${prefix}flip heads 100\``;
 
     shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {
             message.channel.send('An error occured.')
             return;
         } else if (!data) {
-            message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
+            message.channel.send(`You do not own a shack! Use \`${prefix}found\` to found your shop!`)
             return
         } else if (data) {
             if (!args[0] || !args[1]) return message.channel.send(incorrect);

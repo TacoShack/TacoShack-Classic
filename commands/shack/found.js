@@ -4,12 +4,11 @@ const shacks = require('../../schemas/shacks.js');
 module.exports.run = async (bot, message) => {
     shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {
-            console.log(err)
             message.channel.send('An error occured.')
+            throw err;
         }
         else if (data) {
-            message.channel.send('You already own a taco shack!')
-            return;
+            return message.channel.send('You already own a taco shack!')
         }
         else if (!data) {
             const newData = new shacks({

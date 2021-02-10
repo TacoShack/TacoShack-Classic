@@ -1,10 +1,6 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
-const prefix = settings.prefix;
-const shacks = require("../../schemas/shacks.js");
-const fs = require('fs');
-const path = require('path');
-const os = require('os')
+const os = require('os');
+
 module.exports.run = async (bot, message, args) => {
 
     const { commands } = message.client;
