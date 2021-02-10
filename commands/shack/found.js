@@ -1,11 +1,7 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
-//const shacks = require("../../data/shacks.json");
-const prefix = settings.prefix;
-const fs = require("fs");
 const shacks = require('../../schemas/shacks.js');
-module.exports.run = async (bot, message, args) => {
 
+module.exports.run = async (bot, message) => {
     shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {
             console.log(err)
@@ -51,7 +47,6 @@ module.exports.run = async (bot, message, args) => {
 
         message.reply("Your account was created! Check your DM for more info!");
 
-
         var helpdm = new Discord.MessageEmbed()
             .setColor('0x1ed606')
             .setDescription(`🌮 __**Your brand new taco shack is now in business!**__ 🌮\n
@@ -63,14 +58,8 @@ module.exports.run = async (bot, message, args) => {
         🔸 Either top the **Most Tacos Sold** or the **Richest** leaderboard for bragging rights.
         
         **Contact @Cole#7575 if you need any further help!**`)
-        message.author.send({ embed: helpdm })
-            .catch(error => { });
-
-
+        return message.author.send({ embed: helpdm }).catch();
     })
-
-    return;
-
 }
 
 module.exports.help = {

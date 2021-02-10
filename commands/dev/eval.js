@@ -1,12 +1,6 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
-const prefix = settings.prefix;
-const shacks = require("../../schemas/shacks.js");
-const fs = require('fs');
-const path = require('path');
-const hourlyIncome = require('../../hourlyIncome.js')
-module.exports.run = async (bot, message, args) => {
 
+module.exports.run = async (bot, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setFooter(message.author.tag, message.author.displayAvatarURL({ format: "png", dynamic: true }))
         .setTimestamp()

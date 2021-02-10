@@ -1,4 +1,7 @@
 {
     "token": "TOKEN HERE",
+    "mongoPass": "MONGO URI",
+    "logWebhook": ["TOKEN", "THE OTHER BIT"],
+    "devs": [""],
     "prefix": "t!"
 }

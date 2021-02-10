@@ -1,11 +1,4 @@
-const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
-const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
-
 module.exports.run = async (bot, message, args, funcs) => {
-
 
     return message.channel.send({ embed: { color: "dc0000", description: "❌ Slots has been disabled!" } })
 

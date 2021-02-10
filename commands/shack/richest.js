@@ -1,15 +1,11 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message) => {
 
     shacks.find().sort([
         ['balance', 'descending']
     ]).exec(async (err, res) => {
-
         if (err) return console.log(err);
 
         var leader = new Discord.MessageEmbed()
@@ -39,8 +35,6 @@ module.exports.run = async (bot, message, args) => {
         }
         await message.channel.send({ embed: leader });
     })
-
-
 }
 
 module.exports.help = {

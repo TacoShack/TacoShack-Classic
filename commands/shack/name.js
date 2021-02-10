@@ -1,8 +1,4 @@
-const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
 
 module.exports.run = async (bot, message, args) => {
 
@@ -16,7 +12,6 @@ module.exports.run = async (bot, message, args) => {
             return;
         }
         else if (data) {
-            //var arlen = args[0].length + 2;
             var params = args.join(' ')
 
             if (!args[0]) return message.reply(`Please use the correct format! \`!name [new name]\``);

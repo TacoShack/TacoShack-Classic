@@ -1,10 +1,7 @@
-const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message) => {
 
     shacks.findOne({ userID: message.author.id }, async (err, data) => {
         if (err) {
@@ -14,7 +11,6 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
             return
         } else if (data) {
-
 
             if (data.tips > Date.now() && data.tips) {
                 message.channel.send(`Chill... Money doesn't grow on trees!`)
@@ -27,8 +23,6 @@ module.exports.run = async (bot, message, args) => {
             data.save().catch(err => console.log(err))
 
             return message.channel.send(`💵 You collected **$${tip}** in tips!`)
-
-
         }
     })
 }

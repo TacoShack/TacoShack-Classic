@@ -1,9 +1,6 @@
 const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
-const prefix = settings.prefix;
-const fs = require("fs");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message) => {
     var help = new Discord.MessageEmbed()
         .setTitle(`All Commands`)
         .setColor('0xf9a422')

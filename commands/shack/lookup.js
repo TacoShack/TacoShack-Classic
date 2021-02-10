@@ -1,18 +1,14 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
 const ms = require("ms");
-module.exports.run = async (bot, message, args, funcs) => {
 
+const incorrect = `❌ Please use the correct format: \`${settings.prefix}lookup [id/shack name]\``;
+
+module.exports.run = async (bot, message, args, funcs) => {
     const embed = new Discord.MessageEmbed()
 
-    var incorrect = `❌ Please use the correct format: \`${settings.prefix}lookup [id/shack name]\``
-
     if (!args[0]) return message.channel.send(embed.setDescription(incorrect).setColor('dc0000'))
-
-
     let user = bot.users.cache.get(args[0])
     if (user) {
         toFind = user.id
@@ -22,10 +18,7 @@ module.exports.run = async (bot, message, args, funcs) => {
         type = 'name'
     }
 
-
-
     shacks.findOne({ [type]: toFind }, (err, data) => {
-
         if (err) {
             message.channel.send('An error occured.')
             return;
@@ -46,7 +39,6 @@ module.exports.run = async (bot, message, args, funcs) => {
                 .addField(`Shack Age`, `⏳ ${time}`)
 
             return message.channel.send('This command was not part of v1.0\nThis would not be a command for another **575** days!', { embed: myshack })
-
         }
     })
 }

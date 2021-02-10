@@ -1,18 +1,14 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
 const ms = require("ms");
+
 module.exports.run = async (bot, message, args, funcs) => {
-
     shacks.findOne({ userID: message.author.id }, (err, data) => {
-
         if (args[0] === 'stats') {
             message.channel.send(funcs.embed("03/29/2020"))
             return;
         } else {
-
             if (err) {
                 message.channel.send('An error occured.')
                 return;

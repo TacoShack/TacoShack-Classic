@@ -1,9 +1,5 @@
-const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
-const prefix = settings.prefix;
 const shacks = require("../../schemas/shacks.js");
-const fs = require('fs');
-const path = require('path');
 module.exports.run = async (bot, message, args) => {
 
     if (!message.member.permissions.has("BAN_MEMBERS")) return;

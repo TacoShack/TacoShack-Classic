@@ -1,18 +1,17 @@
-const Discord = require('discord.js')
-const mongoose = require('./mongoose.js')
+const Discord = require('discord.js');
+const mongoose = require('./mongoose.js');
 const bot = new Discord.Client();
 const settings = require('./util/settings.json');
-const shacks = require("./schemas/shacks.js");
-const hourlyIncome = require('./hourlyIncome.js')
+const hourlyIncome = require('./hourlyIncome.js');
 const requireAll = require('require-all');
 const path = require('path');
 const fs = require('fs');
-const cron = require('cron')
+const cron = require('cron');
 
-bot.logWebhook = new Discord.WebhookClient(settings.logWebhook[0], settings.logWebhook[1])
+bot.logWebhook = new Discord.WebhookClient(settings.logWebhook[0], settings.logWebhook[1]);
 
 let hourlyIncomeJob = new cron.CronJob('0 * * * *', () => {
-	hourlyIncome.send(bot)
+	hourlyIncome.send(bot);
 })
 
 //ready
@@ -29,6 +28,7 @@ const events = requireAll({
 	dirname: __dirname + '/events',
 	filter: /^(?!-)(.+)\.js$/,
 });
+
 // Bind the client events to the files
 for (const name in events) {
 	const event = events[name];
@@ -54,8 +54,8 @@ function getCommands(dir, callback) {
 		});
 	});
 }
+
 getCommands('./commands/');
 
-
-bot.login(settings.token);
+bot.login(settings.token).catch(e => { console.log(e); })
 mongoose.init()

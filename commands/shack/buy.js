@@ -1,21 +1,16 @@
-const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
 const upgrades = require("../../data/upgrades.json");
-const prefix = settings.prefix;
-const fs = require("fs");
 
-module.exports.run = async (bot, message, args, funcs) => {
+function costCalc(cost, amount) {
+    var amountT = amount + 1;
+    var amountTotal = amountT * amountT;
+    var total = amountTotal * cost;
+    return total;
+}
 
-    function costCalc(cost, amount) {
-        var amountT = amount + 1;
-        var amountTotal = amountT * amountT;
-        var total = amountTotal * cost;
-        return total;
-    }
-
+module.exports.run = async (bot, message, args) => {
     if (args[0]) {
-
         shacks.findOne({ userID: message.author.id }, (err, data) => {
             if (err) {
                 console.log(err)
@@ -42,9 +37,8 @@ module.exports.run = async (bot, message, args, funcs) => {
                 return message.channel.send(`✅ You have purchased a **${upgrades[id].name}** for **$${cost}**`)
             }
         })
-
-    } else return message.channel.send("Please specify an ID!")
-
+    }
+    else return message.channel.send("Please specify an ID!")
 
 }
 

@@ -1,15 +1,11 @@
 const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
 
 module.exports.run = async (bot, message, args) => {
-
     shacks.find().sort([
         ['income', 'descending']
     ]).exec(async (err, res) => {
-
         if (err) return console.log(err);
 
         var leader = new Discord.MessageEmbed()
@@ -39,7 +35,6 @@ module.exports.run = async (bot, message, args) => {
         }
         await message.channel.send(`This command was not part of v1.0\nThis would not be a command for another **638** days!`, { embed: leader });
     })
-
 }
 
 module.exports.help = {

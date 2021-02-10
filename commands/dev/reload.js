@@ -1,12 +1,7 @@
-const Discord = require('discord.js');
-const settings = require('../../util/settings.json');
-const prefix = settings.prefix;
-const shacks = require("../../schemas/shacks.js");
 const fs = require('fs');
 const path = require('path');
 
 module.exports.run = async (bot, message, args) => {
-
 	const commandName = args[0].toLowerCase();
 	const command = bot.commands.get(commandName)
 		|| bot.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(commandName));
@@ -26,9 +21,6 @@ module.exports.run = async (bot, message, args) => {
 		console.log(error);
 		message.channel.send(`There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``);
 	}
-
-
-
 }
 
 function traverse(dir, filename) {

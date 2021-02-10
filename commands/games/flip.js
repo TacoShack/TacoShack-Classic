@@ -1,11 +1,9 @@
-const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
-const prefix = settings.prefix;
-const fs = require("fs");
+
+const incorrect = `Please use the correct format: \`${settings.prefix}flip [heads/tails] [bet]\`\n\`Ex: ${settings.prefix}flip heads 100\``;
 
 module.exports.run = async (bot, message, args, funcs) => {
-    var incorrect = `Please use the correct format: \`${settings.prefix}flip [heads/tails] [bet]\`\n\`Ex: ${settings.prefix}flip heads 100\``
 
     shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {

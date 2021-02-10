@@ -2,22 +2,17 @@ const Discord = require('discord.js');
 const settings = require('../../util/settings.json');
 const shacks = require("../../schemas/shacks.js");
 const upgrades = require("../../data/upgrades.json");
-const prefix = settings.prefix;
-const fs = require("fs");
+
+function costCalc(cost, amount) {
+    var amountT = amount + 1;
+    var amountTotal = amountT * amountT;
+    var total = amountTotal * cost;
+    return total;
+}
 
 module.exports.run = async (bot, message, args) => {
 
-
-
-    function costCalc(cost, amount) {
-        var amountT = amount + 1;
-        var amountTotal = amountT * amountT;
-        var total = amountTotal * cost;
-        return total;
-    }
-
     if (!args[0]) {
-
         shacks.findOne({ userID: message.author.id }, (err, data) => {
             if (err) {
                 console.log(err)
@@ -64,14 +59,12 @@ ID: 237\n
 Use **!hire [ID]** to hire an employee!
 Use **!upgrades** to view more boosts!`)
 
-
                 return message.channel.send({ embed: jobmarket })
             }
         })
     }
 
     if (args[0]) {
-
         shacks.findOne({ userID: message.author.id }, (err, data) => {
             if (err) {
                 console.log(err)
