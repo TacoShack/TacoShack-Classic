@@ -16,23 +16,23 @@ module.exports.run = async (bot, message, args) => {
         return total;
     }
 
-if(!args[0]) {
+    if (!args[0]) {
 
-    shacks.findOne({userID: message.author.id}, (err, data) => {
-        if (err) {
-            console.log(err)
-            message.channel.send('An error occured.')
-            return;
-        } else if (!data) {
-            message.channel.send(`You do not own a shack! Use \`!found\` to found your shop!`)
-            return;
-        } else if (data){
+        shacks.findOne({ userID: message.author.id }, (err, data) => {
+            if (err) {
+                console.log(err)
+                message.channel.send('An error occured.')
+                return;
+            } else if (!data) {
+                message.channel.send(`You do not own a shack! Use \`!found\` to found your shop!`)
+                return;
+            } else if (data) {
 
-    var jobmarket = new Discord.MessageEmbed()
-        .setTitle(`Employees`)
-        .setColor('0x3477e2')
-        .setThumbnail('https://cdn.dribbble.com/users/72556/screenshots/1711901/8bit-taco.jpg')
-        .setDescription(`\n
+                var jobmarket = new Discord.MessageEmbed()
+                    .setTitle(`Employees`)
+                    .setColor('0x3477e2')
+                    .setThumbnail('https://cdn.dribbble.com/users/72556/screenshots/1711901/8bit-taco.jpg')
+                    .setDescription(`\n
 **Apprentice Chef**  \`(${data.employees[231]}/15)\`
 Cost: $${costCalc(upgrades[231].price, data.employees[231])}
 Boost: +$${upgrades[231].boost}/hr
@@ -65,41 +65,41 @@ Use **!hire [ID]** to hire an employee!
 Use **!upgrades** to view more boosts!`)
 
 
-    return message.channel.send({embed:jobmarket})
-        }
-    })
-}
+                return message.channel.send({ embed: jobmarket })
+            }
+        })
+    }
 
-if(args[0]) {
+    if (args[0]) {
 
-    shacks.findOne({userID: message.author.id}, (err, data) => {
-        if (err) {
-            console.log(err)
-            message.channel.send('An error occured.')
-            return;
-        } else if (!data) {
-            message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
-            return;
-        } else if (data){
-            
-            var id = args[0].toString()
-            if(!upgrades[id]) return message.channel.send(`Please use a valid ID!`)
-            if(id > 120 && id < 127) return message.channel.send(`That is an upgrade! Use \`${settings.prefix}buy [ID]\` to purchase!`)
+        shacks.findOne({ userID: message.author.id }, (err, data) => {
+            if (err) {
+                console.log(err)
+                message.channel.send('An error occured.')
+                return;
+            } else if (!data) {
+                message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
+                return;
+            } else if (data) {
 
-            var cost = costCalc(upgrades[id].price, data.employees[id])
+                var id = args[0].toString()
+                if (!upgrades[id]) return message.channel.send(`Please use a valid ID!`)
+                if (id > 120 && id < 127) return message.channel.send(`That is an upgrade! Use \`${settings.prefix}buy [ID]\` to purchase!`)
 
-            if(data.balance < cost) return message.channel.send(`You don't have enough money!`)
-            if(data.employees[id] >= upgrades[id].max) return message.channel.send(`You already have hired the maximum amount!`)
+                var cost = costCalc(upgrades[id].price, data.employees[id])
 
-            data.balance -= cost
-            data.income += upgrades[id].boost
-            data.employees[id] += 1
-            data.save().catch(err => console.log(err))
-        
-            return message.channel.send(`✅ You have hired a(n) **${upgrades[id].name}** for **$${cost}**`)
-        }
-    })
-}
+                if (data.balance < cost) return message.channel.send(`You don't have enough money!`)
+                if (data.employees[id] >= upgrades[id].max) return message.channel.send(`You already have hired the maximum amount!`)
+
+                data.balance -= cost
+                data.income += upgrades[id].boost
+                data.employees[id] += 1
+                data.save().catch(err => console.log(err))
+
+                return message.channel.send(`✅ You have hired a(n) **${upgrades[id].name}** for **$${cost}**`)
+            }
+        })
+    }
 }
 
 module.exports.help = {

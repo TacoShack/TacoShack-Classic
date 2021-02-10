@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
     if (args[0].toLowerCase() != 'name') return message.channel.send(incorrect)
     const userid = args[1].replace(/[<@!>]/g, '')
 
-    shacks.findOne({userID: userid}, (err, data) => {
+    shacks.findOne({ userID: userid }, (err, data) => {
         if (err) {
             console.log(err)
             message.channel.send('An error occured.')
@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
         } else if (!data) {
             message.channel.send(`Shack not found!`)
             return;
-        } else if (data){
+        } else if (data) {
             data.name = "Taco Shack"
             data.save().catch(err => console.log(err))
             return message.channel.send(`✅ Changed \`${data.userID}\` name to: **${data.name}**`)

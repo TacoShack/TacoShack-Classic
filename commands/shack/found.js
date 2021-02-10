@@ -3,15 +3,15 @@ const settings = require('../../util/settings.json');
 //const shacks = require("../../data/shacks.json");
 const prefix = settings.prefix;
 const fs = require("fs");
-const shacks  = require('../../schemas/shacks.js');
+const shacks = require('../../schemas/shacks.js');
 module.exports.run = async (bot, message, args) => {
 
-    shacks.findOne({userID: message.author.id}, (err, data) => {
+    shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {
             console.log(err)
             message.channel.send('An error occured.')
         }
-        else if (data){
+        else if (data) {
             message.channel.send('You already own a taco shack!')
             return;
         }
@@ -44,17 +44,17 @@ module.exports.run = async (bot, message, args) => {
                     236: 0,
                     237: 0
                 }
-                    })
-                    newData.save().catch(err => console.log(err))
-                    method =  newData.reminderMethod
-                }
+            })
+            newData.save().catch(err => console.log(err))
+            method = newData.reminderMethod
+        }
 
-                message.reply("Your account was created! Check your DM for more info!");
+        message.reply("Your account was created! Check your DM for more info!");
 
- 
-                var helpdm = new Discord.MessageEmbed()
-                .setColor('0x1ed606')
-                .setDescription(`🌮 __**Your brand new taco shack is now in business!**__ 🌮\n
+
+        var helpdm = new Discord.MessageEmbed()
+            .setColor('0x1ed606')
+            .setDescription(`🌮 __**Your brand new taco shack is now in business!**__ 🌮\n
         🔹 You are in charge of running your taco shack! You will get **hourly income** to pay for things.
         🔹 You can increase your income by purchasing **upgrades** or hiring **employees**!
         🔹 You yourself can also work every **10** minutes, and collect tips every **5** minutes to make some cash.
@@ -63,12 +63,12 @@ module.exports.run = async (bot, message, args) => {
         🔸 Either top the **Most Tacos Sold** or the **Richest** leaderboard for bragging rights.
         
         **Contact @Cole#7575 if you need any further help!**`)
-                message.author.send({embed: helpdm})
-                .catch(error => {});
-            
-        
+        message.author.send({ embed: helpdm })
+            .catch(error => { });
+
+
     })
-   
+
     return;
 
 }

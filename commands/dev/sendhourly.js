@@ -9,8 +9,8 @@ module.exports.run = async (bot, message, args) => {
 
     var d = new Date().toLocaleTimeString();
     bot.logWebhook.send(`ℹ [\`${d}\`] **${message.member.user.tag}** manually sent hourly income!`);
-	hourlyIncome.send(bot)
-	message.channel.send('Hourly Income Started.')
+    hourlyIncome.send(bot)
+    message.channel.send('Hourly Income Started.')
 }
 
 

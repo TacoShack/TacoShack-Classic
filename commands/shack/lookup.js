@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args, funcs) => {
 
 
     let user = bot.users.cache.get(args[0])
-    if (user){
+    if (user) {
         toFind = user.id
         type = 'userID'
     } else {
@@ -22,31 +22,31 @@ module.exports.run = async (bot, message, args, funcs) => {
         type = 'name'
     }
 
-    
 
-    shacks.findOne({[type]: toFind}, (err, data) => {
-   
-        if (err){
+
+    shacks.findOne({ [type]: toFind }, (err, data) => {
+
+        if (err) {
             message.channel.send('An error occured.')
             return;
         } else if (!data) {
             message.channel.send(embed.setDescription('❌ Could not find user!').setColor('dc0000'))
             return
         } else if (data) {
-            var time = ms(Date.now() - data.joined, {long: true});
+            var time = ms(Date.now() - data.joined, { long: true });
 
             var myshack = new Discord.MessageEmbed()
-            .setTitle(`${data.name}`)
-            .setColor('0xf9a422')
-            .setThumbnail(message.author.displayAvatarURL())
-            .addField(`Name`, `🔺 ${data.name}`)
-            .addField(`Balance`, `💵 $${data.balance}`)
-            .addField(`Income`, `💸 $${data.income}/hour`)
-            .addField(`Total Tacos`, `🌮 ${data.tacos}`)
-            .addField(`Shack Age`, `⏳ ${time}`)
-        
-            return message.channel.send('This command was not part of v1.0\nThis would not be a command for another **575** days!', {embed:myshack})
-        
+                .setTitle(`${data.name}`)
+                .setColor('0xf9a422')
+                .setThumbnail(message.author.displayAvatarURL())
+                .addField(`Name`, `🔺 ${data.name}`)
+                .addField(`Balance`, `💵 $${data.balance}`)
+                .addField(`Income`, `💸 $${data.income}/hour`)
+                .addField(`Total Tacos`, `🌮 ${data.tacos}`)
+                .addField(`Shack Age`, `⏳ ${time}`)
+
+            return message.channel.send('This command was not part of v1.0\nThis would not be a command for another **575** days!', { embed: myshack })
+
         }
     })
 }

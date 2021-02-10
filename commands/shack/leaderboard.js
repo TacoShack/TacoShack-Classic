@@ -9,22 +9,22 @@ module.exports.run = async (bot, message, args) => {
     shacks.find().sort([
         ['tacos', 'descending']
     ]).exec(async (err, res) => {
-       
-        if(err) return console.log(err);
+
+        if (err) return console.log(err);
 
         var leader = new Discord.MessageEmbed()
-        .setColor('#f400f0')
-        .setAuthor("🌮  Most Tacos Sold  🌮")
+            .setColor('#f400f0')
+            .setAuthor("🌮  Most Tacos Sold  🌮")
 
         stringarray = []
-        if (res.length === 0 ) {
+        if (res.length === 0) {
             // ... 
         } else if (res.length < 10) { // Less than 10 results
-            for(i = 0; i < res.length; i++) { 
+            for (i = 0; i < res.length; i++) {
                 stringarray.push(`**${i + 1}.** **${res[i].name}** - ${res[i].tacos.toString()} Tacos`)
             }
         } else {
-            for(i = 0; i < 10; i++) { 
+            for (i = 0; i < 10; i++) {
                 stringarray.push(`**${i + 1}.** **${res[i].name}** - ${res[i].tacos.toString()} Tacos`)
             }
         }
@@ -33,10 +33,10 @@ module.exports.run = async (bot, message, args) => {
         let obj = res.find(u => u.userID === message.author.id);
         let index = res.indexOf(obj);
         leader.setDescription(`\n${string} ${(index < 10) ? "" : `\n━━━━━━━━━━━━━━\n**${index + 1}.** **You** - ${obj.tacos.toString()} Tacos`}`)
-        if (index > 10){
-        leader.setFooter('The leaderboard in v1.0 would not show your place')
+        if (index > 10) {
+            leader.setFooter('The leaderboard in v1.0 would not show your place')
         }
-        await message.channel.send({embed: leader});
+        await message.channel.send({ embed: leader });
     })
 
 }

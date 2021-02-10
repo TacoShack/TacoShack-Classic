@@ -13,7 +13,7 @@ module.exports = {
         });
 
         mongoose.connection.on('err', err => {
-            console.log('Mongoose connection error: \n'+err.stack)
+            console.log('Mongoose connection error: \n' + err.stack)
         });
 
         mongoose.connection.on('disconnected', (err) => {

@@ -12,12 +12,12 @@ const cron = require('cron')
 bot.logWebhook = new Discord.WebhookClient(settings.logWebhook[0], settings.logWebhook[1])
 
 let hourlyIncomeJob = new cron.CronJob('0 * * * *', () => {
-hourlyIncome.send(bot)
+	hourlyIncome.send(bot)
 })
 
 //ready
 bot.on('ready', () => {
-    console.log(`Logged in as ${bot.user.tag} | Taco Shack Ready to Sell Some Tacos!`)
+	console.log(`Logged in as ${bot.user.tag} | Taco Shack Ready to Sell Some Tacos!`)
 	bot.user.setActivity(`with v1.0`)
 	hourlyIncomeJob.start()
 });

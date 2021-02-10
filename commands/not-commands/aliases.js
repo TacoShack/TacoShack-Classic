@@ -7,7 +7,7 @@ const fs = require("fs");
 module.exports.run = async (bot, message, args, funcs) => {
 
     message.channel.send(funcs.embed("06/23/2020"))
-    
+
 }
 
 module.exports.help = {

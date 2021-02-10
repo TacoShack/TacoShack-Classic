@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
         return total;
     }
 
-    shacks.findOne({userID: message.author.id}, (err, data) => {
+    shacks.findOne({ userID: message.author.id }, (err, data) => {
         if (err) {
             console.log(err)
             message.channel.send('An error occured.')
@@ -22,13 +22,13 @@ module.exports.run = async (bot, message, args) => {
         } else if (!data) {
             message.channel.send(`You do not own a shack! Use \`${settings.prefix}found\` to found your shop!`)
             return;
-        } else if (data){
+        } else if (data) {
 
             var upgrades_embed = new Discord.MessageEmbed()
-        .setTitle(`Upgrades`)
-        .setColor('0x1ced31')
-        .setThumbnail('https://cdn.dribbble.com/users/72556/screenshots/1711901/8bit-taco.jpg')
-        .setDescription(`\n
+                .setTitle(`Upgrades`)
+                .setColor('0x1ced31')
+                .setThumbnail('https://cdn.dribbble.com/users/72556/screenshots/1711901/8bit-taco.jpg')
+                .setDescription(`\n
 **New Paint**  \`(${data.upgrades[121]}/13)\`
 Cost: $${costCalc(upgrades[121].price, data.upgrades[121])}
 Boost: +$${upgrades[121].boost}/hr
@@ -57,7 +57,7 @@ Use **!buy [ID]** to purchase an item!
 Use **!hire** to hire new employees for more boosts!`)
 
 
-    return message.channel.send({embed:upgrades_embed})
+            return message.channel.send({ embed: upgrades_embed })
 
         }
     })
